@@ -1,0 +1,556 @@
+.search-date {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 20px;
+    border: 1px solid #dedede;
+}
+
+.book__admin-navigation-option {
+    padding: 11px 20px;
+    display: grid;
+    grid-template-columns: 20px auto;
+    cursor: pointer;
+}
+
+.book__admin-navigation-option:hover {
+    background-color: #ff713d;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.book__admin-navigation-option--choosing {
+    background-color: #ff713d;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.book__admin-navigation {
+    padding-left: 5px;
+    padding-top: 3px;
+}
+
+.book__admin-information {
+    position: relative;
+    padding: 15px 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333;
+    position: relative;
+    left: -4px;
+}
+
+.admin-info i {}
+
+.admin-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 6px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    min-width: 120px;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.book__admin-information:hover .admin-dropdown,
+.admin-dropdown:hover {
+    display: block;
+}
+
+.logout-button {
+    padding: 8px 12px;
+    color: #333;
+    background-color: white;
+    transition: background 0.25s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logout-button:hover {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+/* Borrow Book Section */
+.container-fluid {
+    overflow: hidden;
+}
+
+.borrow-book__list-require-borrow-title {
+    padding: 5px;
+    border-bottom: 1px solid #dfe2e6;
+}
+
+.borrow-book__list-require-borrow-content {
+    padding: 5px;
+    border-bottom: 1px solid #dfe2e6;
+    display: table-cell;
+    vertical-align: middle;
+    /* font-size: 1.7rem; */
+}
+
+.borrow-book__list-require-borrow-status {
+    font-size: 1.3rem;
+}
+
+.borrow-book__list-require-borrow-content-title-book {
+    max-width: 230px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.borrow-book__list-require-borrow-content-author {
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.borrow-book__list-require-borrow-content-quantity {
+    position: relative;
+    left: 23px;
+}
+
+.borrow-book__list-require-borrow tbody tr:hover>td {
+    background-color: #f2f2f2;
+    transition: background-color 0.3s ease;
+    /* mượt */
+    cursor: pointer;
+}
+
+.borrow-book__list-require-borrow-status-waiting {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #fff3cd;
+    color: #856404;
+}
+
+.borrow-book__list-require-borrow-status-approved {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #d4edda;
+    color: #155724;
+}
+
+.borrow-book__list-require-borrow-status-denied {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.borrow-book__list-require-borrow-btn-accept {
+    padding: 5px 10px;
+    min-width: 80px;
+    min-height: 30px;
+    background-color: #16a085;
+    color: #fff;
+    border-radius: 7px;
+}
+
+.borrow-book__list-require-borrow-btn-accept:hover {
+    background-color: #1d6b5b;
+}
+
+.borrow-book__list-require-borrow-deny {
+    padding: 5px 10px;
+    min-width: 80px;
+    min-height: 30px;
+    background-color: #c0392b;
+    color: #fff;
+    border-radius: 7px;
+    margin-left: 8px;
+}
+
+.borrow-book__list-require-borrow-deny:hover {
+    background-color: #962d22;
+}
+
+.borrow-book__list-require-borrow-btn-done {
+    padding: 5px 10px;
+    width: 96px;
+    background-color: #fff;
+    color: #a1a6ab;
+    border: 1px solid #a1a6ab;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.borrow-book__util {
+    display: flex;
+    justify-content: space-between;
+}
+
+.borrow-book__util-search {
+    width: 300px;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+    border-color: #16a085;
+    box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.2);
+}
+
+.search-button-management-borrow {
+    position: absolute;
+    right: 5px;
+    background: #16a085;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.search-button-management-borrow:hover {
+    background: #1d6b5b;
+    transform: scale(1.05);
+}
+
+.status-select {
+    padding: 10px 15px;
+    padding-right: 35px;
+    /* Khoảng trống cho icon mũi tên */
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    /* Ẩn style mặc định */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.status-select:hover {
+    border-color: #a1c4d0;
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.2);
+}
+
+.status-select,
+.status-select option {
+    /* ~22.4px */
+    padding: 12px 20px;
+    /* Tăng padding cho cân đối */
+}
+
+.borrow-book__tabs {
+    display: flex;
+    margin: 20px 0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.borrow-book__tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    color: #555;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.borrow-book__tab:hover {
+    color: #16a085;
+}
+
+.borrow-book__tab.active {
+    color: #16a085;
+    border-bottom-color: #16a085;
+    background-color: #f0f9f7;
+}
+
+.borrow-book__list-borrowed tbody tr:hover>td {
+    background-color: #eaeaea;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.borrow-book__list-borrowed-content-quantity {
+    position: relative;
+    left: 23px;
+}
+
+.borrow-book__list-borrowed-content-author {
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.borrow-book__list-borrowed-content-title-book {
+    max-width: 240px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.borrow-book__list-borrowed-title,
+.borrow-book__list-borrowed-content {
+    padding: 5px;
+    border-bottom: 1px solid #dfe2e6;
+    display: table-cell;
+    vertical-align: middle;
+    gap: 10px;
+}
+
+/* Trạng thái mới cho tab "Đã Mượn" */
+.borrow-book__list-borrowed-status-borrowing {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #cbcbf1;
+    /* Lavender nhạt */
+    color: #4b4b8a;
+}
+
+.borrow-book__list-borrowed-status-overdue {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #f5c6cb;
+    /* Màu đỏ nhạt */
+    color: #721c24;
+}
+
+.borrow-book__list-borrowed-status-returned {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: #bcf2d3;
+    /* Xanh lá mint */
+    color: #155724;
+}
+
+/* Nút thao tác mới */
+.borrow-book__list-borrowed-btn-return {
+    padding: 5px 10px;
+    min-width: 80px;
+    min-height: 30px;
+    background-color: #3498db;
+    /* Màu xanh dương */
+    color: #fff;
+    border-radius: 7px;
+}
+
+.borrow-book__list-borrowed-btn-return:hover {
+    background-color: #2980b9;
+}
+
+.borrow-book__list-borrowed-btn-extend {
+    padding: 5px 10px;
+    min-width: 80px;
+    min-height: 30px;
+    background-color: #f39c12;
+    /* Màu cam */
+    color: #fff;
+    border-radius: 7px;
+    margin-left: 8px;
+}
+
+.borrow-book__list-borrowed-btn-extend:hover {
+    background-color: #d35400;
+}
+
+.borrow-book__list-borrowed-btn-completed {
+    padding: 5px 10px;
+    width: 96px;
+    background-color: #fff;
+    color: #a1a6ab;
+    border: 1px solid #a1a6ab;
+    border-radius: 7px;
+    text-align: center;
+}
+
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-dialog {
+    background: white;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content {
+    padding: 0;
+}
+
+.modal-header {
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 15px;
+}
+
+.modal-footer {
+    padding: 15px;
+    border-top: 1px solid #dee2e6;
+    text-align: right;
+}
+
+/* Animation cho transition */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+    transition: opacity 0.3s;
+}
+
+.modal-fade-enter,
+.modal-fade-leave-to {
+    opacity: 0;
+}
+
+.modal-body-request-book {
+    display: flex;
+}
+
+.modal-body-request-book-image {
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+}
+
+.modal-body-request-book-information {
+    width: 50%;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-body-request-book-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.book__library-list-book-navigation-page {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.pagination {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #ddd;
+    font-family: Arial, sans-serif;
+}
+
+.page-item {
+    margin: 0;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 14px;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.page-item:last-child .page-link {
+    border-right: none;
+}
+
+.page-link:hover {
+    background-color: #f2f2f2;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    cursor: default;
+}
+
+.page-item.disabled .page-link {
+    color: #aaa;
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
