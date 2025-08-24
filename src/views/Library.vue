@@ -155,7 +155,7 @@
 
                       <div class="rating">
                         <div
-                          style="padding: 4px 4px 4px 0;"
+                          style="padding: 4px 4px 4px 0"
                           class="non-rating"
                           v-if="!book.averageRating || book.averageRating === 0"
                         >
@@ -279,6 +279,7 @@ export default {
       searchKeyword: "",
       favoriteBookIds: [],
       averageRating: 0,
+      popularBooks: [],
     };
   },
   async mounted() {
@@ -290,6 +291,11 @@ export default {
     const genreFromURL = this.$route.query.genre;
     if (genreFromURL) {
       this.selectedGenres = [genreFromURL];
+    }
+
+    const sortFromURL = this.$route.query.sort;
+    if (sortFromURL && ["popular", "new", "title"].includes(sortFromURL)) {
+      this.sortOption = sortFromURL;
     }
 
     this.fetchGenres();
@@ -310,6 +316,11 @@ export default {
       }
     } catch (error) {
       alert("Lỗi khi lấy sách!");
+    }
+
+    const popularResponse = await bookService.getPopularBookFilter();
+    if (Array.isArray(popularResponse)) {
+      this.popularBooks = popularResponse;
     }
   },
   methods: {
@@ -467,6 +478,20 @@ export default {
         return [...this.filteredBooks].sort((a, b) =>
           a.TenSach.localeCompare(b.TenSach, "vi", { sensitivity: "base" })
         );
+      } else if (this.sortOption === "popular") {
+        // Thêm case này
+        // Sắp xếp theo thứ tự trong popularBooks, sau đó theo score giảm dần
+        return [...this.filteredBooks].sort((a, b) => {
+          const aPopular = this.popularBooks.find((p) => p._id === a._id);
+          const bPopular = this.popularBooks.find((p) => p._id === b._id);
+
+          if (aPopular && bPopular) {
+            return bPopular.score - aPopular.score;
+          }
+          if (aPopular) return -1;
+          if (bPopular) return 1;
+          return 0;
+        });
       } else {
         return this.filteredBooks;
       }
@@ -495,6 +520,12 @@ export default {
         this.selectedGenres = [newGenre];
       } else {
         this.selectedGenres = [];
+      }
+    },
+
+    "$route.query.sort"(newSort) {
+      if (newSort && ["popular", "new", "title"].includes(newSort)) {
+        this.sortOption = newSort;
       }
     },
 

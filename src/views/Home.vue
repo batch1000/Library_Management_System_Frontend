@@ -68,7 +68,9 @@
         <div class="home__book-line">
           <div class="line"></div>
         </div>
-        <button type="button" class="view-all-btn">Xem tất cả ></button>
+        <button type="button" class="view-all-btn" @click="goToPopularBooks">
+          Xem tất cả >
+        </button>
       </div>
 
       <div class="home__popular-book-content">
@@ -238,14 +240,22 @@
               <div class="home__book-line">
                 <div class="line"></div>
               </div>
-              <button type="button" class="view-all-btn">Xem tất cả ></button>
+              <div class="home__book-of-the-day-three-dot">
+                <i
+                  v-for="index in 3"
+                  :key="index"
+                  class="fa-solid fa-circle"
+                  :class="{ 'dot--active': trendingDotIndex === index - 1 }"
+                  @click="selectTrendingDot(index - 1)"
+                ></i>
+              </div>
             </div>
 
             <div class="home__trending-book-content">
               <div class="row g-5 home__feature-book-list">
                 <div
                   class="col-lg-4 home__feature-book-element"
-                  v-for="book in trendingBooks"
+                  v-for="book in currentTrendingBooks"
                   :key="book._id"
                 >
                   <!-- Badge yêu thích -->
@@ -300,14 +310,23 @@
                       {{ book.TacGia }}
                     </div>
                     <div class="rating">
-                      <span
-                        v-for="index in 5"
-                        :key="index"
-                        class="star"
-                        :style="getStarStyle(book.SoSaoTB, index)"
+                      <div
+                        style="padding: 4px 4px 4px 0"
+                        class="non-rating"
+                        v-if="!book.SoSaoTB || book.SoSaoTB === 0"
                       >
-                        ★
-                      </span>
+                        <span>Chưa có đánh giá</span>
+                      </div>
+                      <div class="rating" v-else>
+                        <span
+                          v-for="index in 5"
+                          :key="index"
+                          class="star"
+                          :style="getStarStyle(book.SoSaoTB, index)"
+                        >
+                          ★
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -325,7 +344,9 @@
               <div class="home__book-line">
                 <div class="line"></div>
               </div>
-              <button type="button" class="view-all-btn">Xem tất cả ></button>
+              <button type="button" class="view-all-btn" @click="goToNewBooks">
+                Xem tất cả >
+              </button>
             </div>
 
             <div class="home__new-release-content">
@@ -522,6 +543,7 @@ export default {
       mostViewedBooks: [],
       todayBooks: [],
       currentDotIndex: 0,
+      trendingDotIndex: 0,
       topTenWeekBooks: [],
       trendingBooks: [],
       popularBooks: [],
@@ -675,12 +697,35 @@ export default {
     selectDot(index) {
       this.currentDotIndex = index;
     },
+
+    selectTrendingDot(index) {
+      this.trendingDotIndex = index;
+    },
+
+    goToPopularBooks() {
+      this.$router.push({
+        path: "/library",
+        query: { sort: "popular" },
+      });
+    },
+
+    goToNewBooks() {
+      this.$router.push({
+        path: "/library",
+        query: { sort: "new" },
+      });
+    },
   },
 
   computed: {
     currentTodayBooks() {
       const startIndex = this.currentDotIndex * 2;
       return this.todayBooks.slice(startIndex, startIndex + 2);
+    },
+
+    currentTrendingBooks() {
+      const startIndex = this.trendingDotIndex * 3;
+      return this.trendingBooks.slice(startIndex, startIndex + 3);
     },
   },
 };

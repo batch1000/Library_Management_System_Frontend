@@ -114,4 +114,8 @@ export const bookService = {
     async getPopularBook() {
         return apiService.get('book/getPopularBook');
     },
+
+    async getPopularBookFilter() {
+        return apiService.get('book/getPopularBookFilter');
+    },
 };
