@@ -29,6 +29,23 @@
     padding: 15px 40px 0 40px;
 }
 
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #999;   /* viền đậm hơn */
+    border-radius: 4px;       /* bo góc nhẹ cho đẹp */
+    cursor: pointer;
+    position: relative;
+    top: -1px;
+    margin-right: 10px;
+  }
+  
+  /* Khi tick vào thì đổi nền + viền */
+  .form-check-input:checked {
+    background-color: #007bff; /* màu nền khi tick */
+    border-color: #007bff;     /* màu viền khi tick */
+  }
+
 .form-check-label {
     font-size: 1.6rem;
     font-weight: 400;

@@ -98,6 +98,10 @@
 
           <div class="book__header-search-book">
             <i class="fa-solid fa-magnifying-glass"></i>
+            
+            <div class="book__header-search-dropdown">
+              <input type="text" placeholder="Tìm sách..." />
+            </div>
           </div>
         </div>
       </div>
