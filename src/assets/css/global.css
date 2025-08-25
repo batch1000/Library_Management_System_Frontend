@@ -312,7 +312,6 @@ button {
     color: #fa553c;
 }
 
-
 /*Notification*/
 .notif--unread {
     background-color: #e8f0fe;
@@ -484,6 +483,7 @@ button {
 
 .book__header-search-book {
     position: relative;
+    z-index: 6;
 }
 
 .book__header-search-dropdown {
@@ -505,14 +505,24 @@ button {
     /* rộng hơn */
     padding: 10px 20px;
     /* padding thoáng hơn */
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     /* chữ to hơn */
-    border: 1px solid #ccc;
+
     border-radius: 24px;
     /* bo cong nhiều hơn */
     outline: none;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 2px 8px rgba(176, 176, 176, 0.25);
+}
+
+.book__header-search-dropdown input:focus {
+    border: 1px solid #3f8cff;
+    /* xanh dương nhạt */
+    box-shadow: 0 2px 8px rgba(63, 140, 255, 0.3);
+    /* xanh dương đồng bộ */
+    outline: none;
 }
 
 /* khi hover icon hoặc cả khối thì hiện */
@@ -530,4 +540,45 @@ button {
     width: 85px;
     height: 20px;
     cursor: auto;
+}
+
+.book__header-search-result {
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    width: 100%;
+    border: 1px solid #ddd; /* viền xám nhạt */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* đổ bóng nhẹ */
+    border-radius: 6px; 
+}
+
+.book__header-search-result-element {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+}
+
+.book__header-search-result-element:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.book__header-search-result-element:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+
+.book__header-search-result-element-image img {
+    width: 50px;
+    height: 50px;
+}
+
+.book__header-search-book:hover .book__header-search-result {
+    color: initial;
+    cursor: auto;
+}
+
+.book__header-search-result-element-title {
+    font-size: 1.6rem;
+    font-weight: 700;
 }

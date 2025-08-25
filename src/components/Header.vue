@@ -98,9 +98,49 @@
 
           <div class="book__header-search-book">
             <i class="fa-solid fa-magnifying-glass"></i>
-            
+
             <div class="book__header-search-dropdown">
-              <input type="text" placeholder="Tìm sách..." />
+              <input
+                type="text"
+                placeholder="Tìm sách..."
+                v-model="searchQuery"
+                @input="handleSearchInput"
+              />
+
+              <div
+                class="book__header-search-result"
+                v-show="showSearchResults"
+              >
+                <div class="book__header-search-result-list">
+                  <div
+                    class="book__header-search-result-element"
+                    v-for="book in searchResults.slice(0, 5)"
+                    :key="book._id"
+                    @click="goToBookDetail(book._id)"
+                    style="cursor: pointer"
+                  >
+                    <div class="book__header-search-result-element-image">
+                      <img :src="book.Image" :alt="book.TenSach" />
+                    </div>
+
+                    <div class="book__header-search-result-element-information">
+                      <div class="book__header-search-result-element-title">
+                        {{ book.TenSach }}
+                      </div>
+                      <div class="book__header-search-result-element-author">
+                        {{ book.TacGia }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    v-if="searchResults.length === 0"
+                    style="padding: 15px; text-align: center; color: #666"
+                  >
+                    Không tìm thấy kết quả nào
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -142,17 +182,26 @@ export default {
           type: "warning", // ⚠️ Nhắc nhở
         },
       ],
-
       readNotificationIds: [],
+      books: [], // Lưu toàn bộ danh sách sách
+      searchQuery: "", // Từ khóa tìm kiếm
+      searchResults: [], // Kết quả tìm kiếm
+      showSearchResults: false, // Hiển thị dropdown kết quả
+      searchTimeout: null,
     };
   },
   async mounted() {
     document.addEventListener("click", this.handleClickOutside);
     await this.fetchGenres();
+    await this.fetchAllBooks();
   },
 
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickOutside);
+
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
   },
   methods: {
     handleLogout() {
@@ -168,6 +217,7 @@ export default {
       // Chuyển hướng về trang đăng nhập
       this.$router.push("/login");
     },
+
     handleClickOutside(event) {
       const notifArea = this.$refs.notifArea;
       if (notifArea && !notifArea.contains(event.target)) {
@@ -187,6 +237,7 @@ export default {
         this.showNotifications = false;
       }
     },
+
     async fetchGenres() {
       try {
         const response = await bookService.getAllGenre();
@@ -218,6 +269,49 @@ export default {
           }
         });
       }
+    },
+
+    async fetchAllBooks() {
+      try {
+        this.books = await bookService.getAllBook();
+      } catch (error) {
+        console.error("Lỗi khi tải danh sách sách:", error);
+      }
+    },
+
+    searchBooks() {
+      if (this.searchQuery.trim() === "") {
+        this.searchResults = [];
+        this.showSearchResults = false;
+        return;
+      }
+
+      this.searchResults = this.books.filter(
+        (book) =>
+          book.TenSach.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          book.TacGia.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+      this.showSearchResults = true;
+    },
+
+    handleSearchInput() {
+      clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.searchBooks();
+      }, 300);
+    },
+
+    selectBook(book) {
+      // Logic khi click vào 1 kết quả
+      this.$router.push({ name: "BookDetail", params: { id: book._id } });
+      this.showSearchResults = false;
+      this.searchQuery = "";
+    },
+
+    goToBookDetail(bookId) {
+      this.$router.push({ name: "DetailBook", params: { id: bookId } });
+      this.showSearchResults = false;
+      this.searchQuery = "";
     },
   },
 };
