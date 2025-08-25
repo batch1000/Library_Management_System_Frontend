@@ -86,13 +86,26 @@
         <div class="col-lg-9 book__library-list-wrapper">
           <div class="book__library-list">
             <div class="book__library-list-toolbar">
-              <div class="book__library-list-toolbar-search">
-                <span class="search-icon">🔍</span>
-                <input
-                  type="text"
-                  placeholder="Tìm theo mã hoặc tên sách..."
-                  v-model="searchKeyword"
-                />
+              <div class="book__library-list-toolbar-search-group">
+                <div class="book__library-list-toolbar-search">
+                  <span class="search-icon">🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Tìm theo mã hoặc tên sách..."
+                    v-model="searchKeyword"
+                  />
+                </div>
+
+                <div
+                  class="book__library-list-toolbar-search book__library-list-toolbar-search-author"
+                >
+                  <span class="search-icon">🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Tìm theo tác giả..."
+                    v-model="searchAuthor"
+                  />
+                </div>
               </div>
 
               <div class="book__library-list-toolbar-sort">
@@ -277,6 +290,7 @@ export default {
       sortOption: "popular",
       selectedGenres: [],
       searchKeyword: "",
+      searchAuthor: "",
       favoriteBookIds: [],
       averageRating: 0,
       popularBooks: [],
@@ -321,6 +335,11 @@ export default {
     const popularResponse = await bookService.getPopularBookFilter();
     if (Array.isArray(popularResponse)) {
       this.popularBooks = popularResponse;
+    }
+
+    const authorFromState = this.$router.options.history.state?.author;
+    if (authorFromState) {
+      this.searchAuthor = authorFromState;
     }
   },
   methods: {
@@ -455,6 +474,15 @@ export default {
         });
       }
 
+      //Filter theo tác giả
+      if (this.searchAuthor.trim()) {
+        const authorKeyword = this.searchAuthor.toLowerCase().trim();
+        result = result.filter((book) => {
+          const tacGia = book.TacGia.toLowerCase();
+          return tacGia.includes(authorKeyword);
+        });
+      }
+
       // Filter theo thể loại đã chọn
       if (this.selectedGenres.length > 0) {
         result = result.filter((book) => {
@@ -529,6 +557,13 @@ export default {
       }
     },
 
+    "$route.query.author"(newAuthor) {
+      // THÊM WATCH NÀY
+      if (newAuthor) {
+        this.searchAuthor = newAuthor;
+      }
+    },
+
     sortOption() {
       this.goToPage(1);
     },
@@ -538,6 +573,11 @@ export default {
     },
 
     selectedGenres() {
+      this.goToPage(1);
+    },
+
+    searchAuthor() {
+      // THÊM WATCH NÀY
       this.goToPage(1);
     },
   },

@@ -73,15 +73,24 @@
     width: 100%;
 }
 
+.book__library-list-toolbar-search-group {
+    display: flex;
+    gap: 20px;
+}
+
 .book__library-list-toolbar-search {
     position: relative;
     width: 100%;
-    max-width: 300px;
+    width: 270px;
+}
+
+.book__library-list-toolbar-search-author {
+    width: 210px;
 }
 
 .book__library-list-toolbar-search .search-icon {
     position: absolute;
-    top: 52%;
+    top: 52% !important;
     left: 12px;
     transform: translateY(-50%);
     font-size: 16px;

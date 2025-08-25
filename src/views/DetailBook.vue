@@ -18,7 +18,11 @@
             <div class="detailbook__information-book-header-wrapper">
               <div class="detailbook__information-book-author">
                 <span class="title">Tác giả: </span>
-                <span class="content">{{ book.TacGia }}</span>
+                <span
+                  class="content"
+                  @click="goToLibraryWithAuthor(book.TacGia)"
+                  >{{ book.TacGia }}</span
+                >
               </div>
 
               <div class="detailbook__information-book-star-wrapper">
@@ -846,6 +850,13 @@ export default {
         console.error("Lỗi khi cập nhật averageRating:", err);
         this.averageRating = 0;
       }
+    },
+
+    goToLibraryWithAuthor(authorName) {
+      this.$router.push({
+        name: "Library",
+        state: { author: authorName }
+      });
     },
   },
 
