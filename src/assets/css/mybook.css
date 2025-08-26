@@ -161,7 +161,7 @@
 }
 
 .book__library-list-book-element-author {
-    color: #a69da3;
+    color: rgba(0, 0, 0, 0.7);
     font-weight: 500;
 }
 

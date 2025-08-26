@@ -190,6 +190,7 @@
           <th class="borrow-book__list-borrowed-title">Số cuốn</th>
           <th class="borrow-book__list-borrowed-title">Ngày Mượn</th>
           <th class="borrow-book__list-borrowed-title">Hạn Trả</th>
+          <th class="borrow-book__list-borrowed-title">Ngày Trả</th>
           <th class="borrow-book__list-borrowed-title">Tình Trạng</th>
           <th class="borrow-book__list-borrowed-title">Thao Tác</th>
         </tr>
@@ -225,6 +226,13 @@
           </td>
           <td class="borrow-book__list-borrowed-content">
             {{ new Date(item.NgayTra).toLocaleDateString("vi-VN") }}
+          </td>
+          <td class="borrow-book__list-borrowed-content">
+            {{
+              item.NgayGhiNhanTra
+                ? new Date(item.NgayGhiNhanTra).toLocaleDateString("vi-VN")
+                : "Chưa trả"
+            }}
           </td>
           <td class="borrow-book__list-borrowed-content">
             <div
@@ -421,6 +429,16 @@
                       }}
                     </p>
                     <p>
+                      <strong>Ngày trả:</strong>
+                      {{
+                        selectedItem?.NgayGhiNhanTra
+                          ? new Date(
+                              selectedItem.NgayGhiNhanTra
+                            ).toLocaleDateString("vi-VN")
+                          : "Chưa trả"
+                      }}
+                    </p>
+                    <p>
                       <strong>Tình trạng:</strong>
                       {{
                         selectedItem?.TrangThai === "approved"
@@ -549,9 +567,9 @@ export default {
 
     async updateOverdueIfNeeded(item) {
       const now = new Date();
-      const ngayTra = new Date(item.NgayTra);
+      const NgayTra = new Date(item.NgayTra);
 
-      if (item.TrangThai === "approved" && ngayTra < now) {
+      if (item.TrangThai === "approved" && NgayTra < now) {
         try {
           await bookService.updateBorrowStatus({
             requestId: item._id,
@@ -572,8 +590,8 @@ export default {
 
       // Kiểm tra nếu đã gia hạn rồi
       const ngayMuon = new Date(item.NgayMuon);
-      const ngayTra = new Date(item.NgayTra);
-      const soNgay = Math.floor((ngayTra - ngayMuon) / (1000 * 60 * 60 * 24));
+      const NgayTra = new Date(item.NgayTra);
+      const soNgay = Math.floor((NgayTra - ngayMuon) / (1000 * 60 * 60 * 24));
 
       if (soNgay > 7) {
         alert("Bạn chỉ được gia hạn 1 lần!");

@@ -20,6 +20,7 @@
               <select id="sort" v-model="sortOption">
                 <option value="all">Tất cả</option>
                 <option value="favorite">Yêu thích</option>
+                <option value="pending">Chờ duyệt</option>
                 <option value="approved">Đang mượn</option>
                 <option value="returned">Đã trả</option>
                 <option value="overdue">Quá hạn</option>
@@ -31,7 +32,7 @@
           <div class="book__library-list-book">
             <div class="row book__library-list-book-row">
               <div v-if="paginatedBooks.length === 0" class="no-books-message">
-                📚 Hiện tại không có dữ liệu
+                {{ getNoDataMessage() }}
               </div>
 
               <div
@@ -112,7 +113,7 @@
                       class="book__library-list-book-element-return-date"
                       v-if="book.NgayTra && book.TrangThai !== 'not_borrowed'"
                     >
-                      Ngày trả: {{ formatDate(book.NgayTra) }}
+                      Hạn trả: {{ formatDate(book.NgayTra) }}
                     </div>
 
                     <div
@@ -314,6 +315,13 @@ export default {
       const bid = bookId.toString();
       return this.favoriteBookIds.some((id) => id.toString() === bid);
     },
+
+    getNoDataMessage() {
+      if (this.searchKeyword.trim()) {
+        return "📚 Tìm không thấy sách";
+      }
+      return "📚 Hiện tại không có dữ liệu";
+    },
   },
   computed: {
     filteredBooks() {
@@ -373,6 +381,15 @@ export default {
         filtered = filtered.filter(
           (book) => book.TrangThai === this.sortOption
         );
+      }
+
+      if (this.searchKeyword.trim()) {
+        const keyword = this.searchKeyword.toLowerCase().trim();
+        filtered = filtered.filter((book) => {
+          const tenSach = book.MaSach.TenSach.toLowerCase();
+          const maSach = book.MaSach.MaSach.toLowerCase();
+          return tenSach.includes(keyword) || maSach.includes(keyword);
+        });
       }
 
       // Sắp xếp theo tiêu chí
