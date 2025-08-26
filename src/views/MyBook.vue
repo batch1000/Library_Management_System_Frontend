@@ -31,7 +31,7 @@
           <div class="book__library-list-book">
             <div class="row book__library-list-book-row">
               <div v-if="paginatedBooks.length === 0" class="no-books-message">
-                📚 Bạn chưa mượn quyển sách nào
+                📚 Hiện tại không có dữ liệu
               </div>
 
               <div

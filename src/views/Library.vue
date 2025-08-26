@@ -32,6 +32,7 @@
                   type="checkbox"
                   value="5"
                   id="rating5"
+                  v-model="selectedRatings"
                 />
                 <label class="form-check-label" for="rating5">
                   <div class="rating">
@@ -50,6 +51,7 @@
                   type="checkbox"
                   value="4"
                   id="rating4"
+                  v-model="selectedRatings"
                 />
                 <label class="form-check-label" for="rating4">
                   <div class="rating">
@@ -68,6 +70,7 @@
                   type="checkbox"
                   value="3"
                   id="rating3"
+                  v-model="selectedRatings"
                 />
                 <label class="form-check-label" for="rating3">
                   <div class="rating">
@@ -119,7 +122,16 @@
             </div>
 
             <div class="book__library-list-book">
-              <div class="row book__library-list-book-row">
+              <div
+                v-if="!loading && sortedBooks.length === 0"
+                class="text-center py-5"
+              >
+                <p style="color: #666; font-size: 2.8rem">
+                  📚 Không tìm thấy sách phù hợp
+                </p>
+              </div>
+
+              <div class="row book__library-list-book-row" v-else-if="!loading">
                 <div
                   class="col-lg-3 book__library-list-book-element-wrapper"
                   v-for="book in paginatedBooks"
@@ -197,6 +209,10 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div v-if="loading" class="text-center py-5">
+                <p style="color: #999; font-size: 2.8rem">Đang tải sách...</p>
               </div>
 
               <div
@@ -294,6 +310,8 @@ export default {
       favoriteBookIds: [],
       averageRating: 0,
       popularBooks: [],
+      selectedRatings: [],
+      loading: true,
     };
   },
   async mounted() {
@@ -341,6 +359,8 @@ export default {
     if (authorFromState) {
       this.searchAuthor = authorFromState;
     }
+
+    this.loading = false;
   },
   methods: {
     formatPrice(value) {
@@ -494,6 +514,24 @@ export default {
         });
       }
 
+      // THÊM FILTER THEO RATING
+      if (this.selectedRatings.length > 0) {
+        result = result.filter((book) => {
+          const rating = parseFloat(book.averageRating) || 0;
+          return this.selectedRatings.some((selectedRating) => {
+            const ratingNum = parseInt(selectedRating);
+            if (ratingNum === 5) {
+              return rating >= 5.0;
+            } else if (ratingNum === 4) {
+              return rating >= 4.0 && rating < 5.0;
+            } else if (ratingNum === 3) {
+              return rating >= 3.0 && rating < 4.0;
+            }
+            return false;
+          });
+        });
+      }
+
       return result;
     },
 
@@ -578,6 +616,10 @@ export default {
 
     searchAuthor() {
       // THÊM WATCH NÀY
+      this.goToPage(1);
+    },
+
+    selectedRatings() {
       this.goToPage(1);
     },
   },
