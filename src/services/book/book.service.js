@@ -54,6 +54,14 @@ export const bookService = {
         return apiService.get(`book/getBorrowBookOfUser/${id}`);
     },
 
+    async countCurrentBorrowing(data) {
+        return apiService.post('book/countCurrentBorrowing', data);
+    },
+
+    async countCurrentBorrowingToday(data) {
+        return apiService.post('book/countCurrentBorrowingToday', data);
+    },
+
     async addFavoriteBook(data) {
         return apiService.post('book/addFavoriteBook', data);
     },

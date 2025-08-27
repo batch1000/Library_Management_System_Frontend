@@ -136,7 +136,7 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #fff3cd;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffe066 100%);
     color: #856404;
 }
 
@@ -146,8 +146,8 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #d4edda;
-    color: #155724;
+    background: linear-gradient(135deg, #169e83 0%, #20c997 100%);
+    color: #fff;
 }
 
 .borrow-book__list-require-borrow-status-denied {
@@ -156,35 +156,35 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #f8d7da;
-    color: #721c24;
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    color: #fff;
 }
 
 .borrow-book__list-require-borrow-btn-accept {
     padding: 5px 10px;
     min-width: 80px;
     min-height: 30px;
-    background-color: #16a085;
+    background: linear-gradient(135deg, #169e83 0%, #20c997 100%);
     color: #fff;
     border-radius: 7px;
 }
 
 .borrow-book__list-require-borrow-btn-accept:hover {
-    background-color: #1d6b5b;
+    background: linear-gradient(135deg, #138d75 0%, #17a589 100%);
 }
 
 .borrow-book__list-require-borrow-deny {
     padding: 5px 10px;
     min-width: 80px;
     min-height: 30px;
-    background-color: #c0392b;
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
     color: #fff;
     border-radius: 7px;
     margin-left: 8px;
 }
 
 .borrow-book__list-require-borrow-deny:hover {
-    background-color: #962d22;
+    background: linear-gradient(135deg, #e63950 0%, #e8432b 100%);
 }
 
 .borrow-book__list-require-borrow-btn-done {
@@ -350,9 +350,8 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #cbcbf1;
-    /* Lavender nhạt */
-    color: #4b4b8a;
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+    color: #1a237e;
 }
 
 .borrow-book__list-borrowed-status-overdue {
@@ -361,9 +360,9 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #f5c6cb;
-    /* Màu đỏ nhạt */
-    color: #721c24;
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    /* Đỏ cảnh báo nguy hiểm */
+    color: #fff;
 }
 
 .borrow-book__list-borrowed-status-returned {
@@ -372,9 +371,19 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background: #bcf2d3;
-    /* Xanh lá mint */
-    color: #155724;
+    background: linear-gradient(135deg, #29b961 0%, #38ef7d 100%);
+    color: #fff;
+}
+
+.borrow-book__list-borrowed-status-late {
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+    background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    /* Cam vàng gradient xịn */
+    color: #4e2600;
 }
 
 /* Nút thao tác mới */
@@ -382,21 +391,21 @@
     padding: 5px 10px;
     min-width: 80px;
     min-height: 30px;
-    background-color: #3498db;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
     /* Màu xanh dương */
     color: #fff;
     border-radius: 7px;
 }
 
 .borrow-book__list-borrowed-btn-return:hover {
-    background-color: #2980b9;
+    background: linear-gradient(135deg, #2980b9 0%, #2471a3 100%);
 }
 
 .borrow-book__list-borrowed-btn-extend {
     padding: 5px 10px;
     min-width: 80px;
     min-height: 30px;
-    background-color: #f39c12;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     /* Màu cam */
     color: #fff;
     border-radius: 7px;
@@ -404,7 +413,7 @@
 }
 
 .borrow-book__list-borrowed-btn-extend:hover {
-    background-color: #d35400;
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
 }
 
 .borrow-book__list-borrowed-btn-completed {

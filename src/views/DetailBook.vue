@@ -519,6 +519,27 @@ export default {
         return;
       }
 
+      const currentBorrow = await bookService.countCurrentBorrowing({
+        MaDocGia: userState._id,
+      });
+      const todayBorrow = await bookService.countCurrentBorrowingToday({
+        MaDocGia: userState._id,
+      });
+
+      if (currentBorrow + this.borrowQuantity > 6) {
+        alert(
+          `Bạn đang mượn ${currentBorrow} cuốn.\nKhông thể mượn quá 6 cuốn sách cùng lúc!`
+        );
+        return;
+      }
+
+      if (todayBorrow + this.borrowQuantity > 3) {
+        alert(
+          `Bạn đã mượn ${todayBorrow} cuốn hôm nay.\nChỉ được mượn tối đa 3 cuốn trong ngày!`
+        );
+        return;
+      }
+
       try {
         const data = {
           MaSach: this.book._id,
@@ -855,7 +876,7 @@ export default {
     goToLibraryWithAuthor(authorName) {
       this.$router.push({
         name: "Library",
-        state: { author: authorName }
+        state: { author: authorName },
       });
     },
   },

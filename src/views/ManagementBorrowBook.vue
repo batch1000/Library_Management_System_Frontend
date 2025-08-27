@@ -204,11 +204,13 @@
           <td class="borrow-book__list-borrowed-content">
             {{ item.MaDocGia?.MaDocGia }}
           </td>
+
           <td
             class="borrow-book__list-borrowed-content borrow-book__list-borrowed-content-author"
           >
             {{ item.MaDocGia?.HoLot }} {{ item.MaDocGia?.Ten }}
           </td>
+
           <td
             class="borrow-book__list-borrowed-content borrow-book__list-borrowed-content-title-book"
           >
@@ -224,9 +226,11 @@
           <td class="borrow-book__list-borrowed-content">
             {{ new Date(item.NgayMuon).toLocaleDateString("vi-VN") }}
           </td>
+
           <td class="borrow-book__list-borrowed-content">
             {{ new Date(item.NgayTra).toLocaleDateString("vi-VN") }}
           </td>
+
           <td class="borrow-book__list-borrowed-content">
             {{
               item.NgayGhiNhanTra
@@ -234,6 +238,7 @@
                 : "Chưa trả"
             }}
           </td>
+
           <td class="borrow-book__list-borrowed-content">
             <div
               class="borrow-book__list-require-borrow-status"
@@ -243,7 +248,11 @@
                 'borrow-book__list-borrowed-status-overdue':
                   item.TrangThai === 'overdue',
                 'borrow-book__list-borrowed-status-returned':
-                  item.TrangThai === 'returned',
+                  item.TrangThai === 'returned' &&
+                  new Date(item.NgayGhiNhanTra) <= new Date(item.NgayTra),
+                'borrow-book__list-borrowed-status-late':
+                  item.TrangThai === 'returned' &&
+                  new Date(item.NgayGhiNhanTra) > new Date(item.NgayTra),
               }"
             >
               {{
@@ -251,10 +260,13 @@
                   ? "Đang Mượn"
                   : item.TrangThai === "overdue"
                   ? "Quá Hạn"
+                  : new Date(item.NgayGhiNhanTra) > new Date(item.NgayTra)
+                  ? "Trả Trễ"
                   : "Đã Trả"
               }}
             </div>
           </td>
+
           <td class="borrow-book__list-borrowed-content">
             <template
               v-if="
@@ -371,16 +383,20 @@
                     <strong>Mã độc giả:</strong>
                     {{ selectedItem?.MaDocGia?.MaDocGia }}
                   </p>
+
                   <p>
                     <strong>Họ tên:</strong> {{ selectedItem?.MaDocGia?.HoLot }}
                     {{ selectedItem?.MaDocGia?.Ten }}
                   </p>
+
                   <p>
                     <strong>Mã Sách:</strong> {{ selectedItem?.MaSach?.MaSach }}
                   </p>
+
                   <p>
                     <strong>Sách:</strong> {{ selectedItem?.MaSach?.TenSach }}
                   </p>
+
                   <p><strong>Số cuốn:</strong> {{ selectedItem?.SoLuong }}</p>
 
                   <!-- Hiển thị thông tin khác nhau tùy theo tab -->
@@ -418,6 +434,7 @@
                           : ""
                       }}
                     </p>
+
                     <p>
                       <strong>Hạn trả:</strong>
                       {{
@@ -428,6 +445,7 @@
                           : ""
                       }}
                     </p>
+
                     <p>
                       <strong>Ngày trả:</strong>
                       {{
@@ -438,6 +456,7 @@
                           : "Chưa trả"
                       }}
                     </p>
+
                     <p>
                       <strong>Tình trạng:</strong>
                       {{
@@ -445,6 +464,9 @@
                           ? "Đang Mượn"
                           : selectedItem?.TrangThai === "overdue"
                           ? "Quá Hạn"
+                          : new Date(selectedItem?.NgayGhiNhanTra) >
+                            new Date(selectedItem?.NgayTra)
+                          ? "Trả Trễ"
                           : "Đã Trả"
                       }}
                     </p>
