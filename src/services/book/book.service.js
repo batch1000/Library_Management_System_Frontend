@@ -62,6 +62,18 @@ export const bookService = {
         return apiService.post('book/countCurrentBorrowingToday', data);
     },
 
+    async countCurrentPending(data) {
+        return apiService.post('book/countCurrentPending', data);
+    },
+
+    async countCurrentPendingToday(data) {
+        return apiService.post('book/countCurrentPendingToday', data);
+    },
+
+    async deletePending(data) {
+        return apiService.delete('book/deletePending', { data });
+    },
+
     async addFavoriteBook(data) {
         return apiService.post('book/addFavoriteBook', data);
     },

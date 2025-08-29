@@ -114,11 +114,17 @@
               :class="{
                 'btn-overdue': lendInfo?.TrangThai === 'overdue',
                 'borrowed-success':
-                  hasBorrowed && lendInfo?.TrangThai !== 'overdue',
+                  hasBorrowed && lendInfo?.TrangThai === 'approved',
                 'out-of-stock': book.SoQuyen === 0,
+                'btn-pending': lendInfo?.TrangThai === 'pending',
               }"
-              @click="lendBook"
-              :disabled="hasBorrowed || book.SoQuyen === 0"
+              @click="
+                lendInfo?.TrangThai === 'pending' ? cancelLend() : lendBook()
+              "
+              :disabled="
+                (lendInfo?.TrangThai === 'approved' && hasBorrowed) ||
+                book.SoQuyen === 0
+              "
             >
               {{ getButtonText() }}
             </button>
@@ -522,21 +528,71 @@ export default {
       const currentBorrow = await bookService.countCurrentBorrowing({
         MaDocGia: userState._id,
       });
+
       const todayBorrow = await bookService.countCurrentBorrowingToday({
         MaDocGia: userState._id,
       });
 
-      if (currentBorrow + this.borrowQuantity > 6) {
+      const currentPending = await bookService.countCurrentPending({
+        MaDocGia: userState._id,
+      });
+
+      const todayPending = await bookService.countCurrentPendingToday({
+        MaDocGia: userState._id,
+      });
+
+      const MAX_TOTAL = 6;
+      const MAX_DAILY = 3;
+
+      // --- Check Borrow ---
+      if (currentBorrow + this.borrowQuantity > MAX_TOTAL) {
         alert(
-          `Bạn đang mượn ${currentBorrow} cuốn.\nKhông thể mượn quá 6 cuốn sách cùng lúc!`
+          `Bạn đang mượn ${currentBorrow} cuốn.\nKhông thể mượn quá ${MAX_TOTAL} cuốn cùng lúc!`
         );
         return;
       }
 
-      if (todayBorrow + this.borrowQuantity > 3) {
+      if (todayBorrow + this.borrowQuantity > MAX_DAILY) {
         alert(
-          `Bạn đã mượn ${todayBorrow} cuốn hôm nay.\nChỉ được mượn tối đa 3 cuốn trong ngày!`
+          `Hôm nay bạn đã mượn ${todayBorrow} cuốn.\nChỉ được mượn tối đa ${MAX_DAILY} cuốn/ngày!`
         );
+        return;
+      }
+
+      // --- Check Pending ---
+      if (currentBorrow + currentPending + this.borrowQuantity > MAX_TOTAL) {
+        const remaining = MAX_TOTAL - currentBorrow - currentPending;
+
+        if (remaining > 0) {
+          alert(
+            `Bạn đang mượn ${currentBorrow} cuốn\n` +
+              `Bạn đã đăng ký muợn ${currentPending} cuốn\n` +
+              `Bạn chỉ có thể đăng ký mượn thêm ${remaining} cuốn`
+          );
+        } else {
+          alert(
+            `Bạn đang mượn ${currentBorrow} cuốn\n` +
+              `Bạn đã đăng ký mượn ${currentPending} cuốn\n` +
+              `Bạn không thể đăng ký mượn thêm nữa`
+          );
+        }
+        return;
+      }
+
+      if (todayBorrow + todayPending + this.borrowQuantity > MAX_DAILY) {
+        const remainingToday = MAX_DAILY - todayBorrow - todayPending;
+
+        if (remainingToday > 0) {
+          alert(
+              `Hôm nay bạn đã đăng ký mượn ${todayPending} cuốn\n` +
+              `Bạn chỉ có thể đăng ký mượn thêm ${remainingToday} cuốn trong ngày`
+          );
+        } else {
+          alert(
+              `Hôm nay bạn đã đăng ký mượn ${todayPending} cuốn\n` +
+              `Bạn không thể đăng ký mượn thêm trong ngày`
+          );
+        }
         return;
       }
 
@@ -554,6 +610,24 @@ export default {
         alert(`Đăng ký mượn ${this.borrowQuantity} cuốn sách thành công`);
       } catch (error) {
         alert("Đã xảy ra lỗi!");
+      }
+    },
+
+    async cancelLend() {
+      try {
+        const data = {
+          MaSach: this.book._id,
+          MaDocGia: userState._id,
+        };
+
+        await bookService.deletePending(data);
+
+        // Reload lại trạng thái mượn để cập nhật nút
+        await this.checkLendStatus();
+
+        alert("Đã hủy đăng ký mượn sách thành công");
+      } catch (error) {
+        alert("Đã xảy ra lỗi khi hủy đăng ký!");
       }
     },
 
@@ -577,7 +651,7 @@ export default {
       if (this.hasBorrowed && this.lendInfo) {
         switch (this.lendInfo.TrangThai) {
           case "pending":
-            return "Chờ duyệt";
+            return "Hủy đăng ký";
           case "approved":
             return "Đang mượn";
           case "returned":
@@ -924,6 +998,16 @@ export default {
 </script>
 
 <style scoped>
+.detailbook__information-book-btn-borrow.btn-pending {
+  background-color: #6f42c1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.detailbook__information-book-btn-borrow.btn-pending:hover {
+  background-color: #59359c;
+}
+
 .book__library-list-book-navigation-page {
   text-align: center;
   margin: 25px 0;

@@ -162,7 +162,9 @@
 
 .book__library-list-book-element-author {
     color: rgba(0, 0, 0, 0.7);
-    font-weight: 500;
+    font-weight: 500;white-space: nowrap;        
+    overflow: hidden;         
+    text-overflow: ellipsis;
 }
 
 .book__library-list-book-element-author:hover {
