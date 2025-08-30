@@ -563,3 +563,101 @@
     background-color: #f9f9f9;
     cursor: not-allowed;
 }
+
+
+
+
+
+/* Danh sách xử phạt */
+.borrow-book__list-penalty {
+    font-size: 1.6rem;
+}
+
+.borrow-book__list-penalty-title,
+.borrow-book__list-penalty-content {
+    padding: 5px;
+    border-bottom: 1px solid #dfe2e6;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.borrow-book__list-penalty tbody tr:hover>td {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+
+
+.return-status-options {
+    display: flex;
+    justify-content: center;
+    gap: 47px;
+    /* Khoảng cách giữa các radio */
+    flex-wrap: wrap;
+    /* Nếu nhiều radio, xuống dòng */
+    margin-top: 5px;
+}
+
+.return-status-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.return-status-options label input[type="radio"] {
+    position: relative;
+    top: 1px;
+    width: 16px;       /* kích thước radio */
+    height: 16px;
+    cursor: pointer
+}
+
+.return-status-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    min-width: 90px;
+    transition: background-color 0.2s, transform 0.1s;
+    font-weight: 500;
+}
+
+.return-status-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    min-width: 90px;
+    font-weight: 500;
+}
+
+/* Nút Xác nhận */
+.return-status-btn-confirm {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.return-status-btn-confirm:hover:not(:disabled) {
+    background-color: #0b5ed7;
+    /* Màu hover đơn giản */
+}
+
+.return-status-btn-confirm:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Nút Hủy */
+.return-status-btn-cancel {
+    background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #ced4da;
+}
+
+.return-status-btn-cancel:hover {
+    background-color: #e2e6ea;
+    /* Màu hover đơn giản */
+}
